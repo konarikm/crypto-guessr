@@ -1,0 +1,8 @@
+{
+  "name": "CryptoGuessr",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "53eeb714"
+}
