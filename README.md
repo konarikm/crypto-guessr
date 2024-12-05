@@ -1,4 +1,4 @@
-# Závěrený projekt z předmětu AP5PM - CryptoGuessr
+# Závěrečný projekt z předmětu AP5PM - CryptoGuessr
 Tento repozitář slouží pro závěrečný projekt z předmětu Programování mobilních aplikací na FAI UTB
 
 ## Cíl projektu
