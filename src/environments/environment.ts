@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: "/assets",
-  //apiKey: INSERT YOUR API KEY HERE
+  //apiKey: INSERT YOUR API KEY HERE!
 };
 
 /*
