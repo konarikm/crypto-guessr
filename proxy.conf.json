@@ -1,0 +1,7 @@
+{
+    "/assets/*" : {
+        "target": "https://api.coincap.io/v2",
+        "secure": false,
+        "changeOrigin": true
+    }
+}
