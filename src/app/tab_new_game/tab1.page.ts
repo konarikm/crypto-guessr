@@ -3,6 +3,7 @@ import { cryptoData } from '../cryptodata/crypto-data';
 import { AppStorageService } from '../app-storage.service';
 import { DIFFICULTY, GAME_HISTORY, HIGH_SCORE } from '../app.constants';
 import { ToastController } from '@ionic/angular';
+import { Share } from '@capacitor/share';
 import { Game } from '../model/game';
 import { CryptoService } from '../api/crypto.service';
 import { CryptoResponse } from '../model/crypto_response';
@@ -17,10 +18,11 @@ export class Tab1Page {
   selectGame: boolean = false;
   startGame: boolean = false;
   showButtons: boolean = false;
-  gameOver: boolean = false;
-  correctAnswer: boolean = false;
   showCrypto: boolean = false;
-
+  correctAnswer: boolean = false;
+  gameOver: boolean = false;
+  newBestScore: boolean = false;
+  
   cryptoId: string = '';
   filteredCryptos: string[] = []
 
@@ -66,6 +68,7 @@ export class Tab1Page {
     this.gameOver = false;
     this.showButtons = false;
     this.showCrypto = false;
+    this.newBestScore = false;
   }
 
   nextCrypto() {
@@ -103,14 +106,43 @@ export class Tab1Page {
     await toast.present();
   }
 
-  selectCrypto(random: boolean) {
+  async shareGame(){
+    await Share.share({
+      title: 'Check out my CryptoGuessr score!',
+      text: `Just got a score of ${this.score} in CryptoGuessr. Not bad, huh?`,
+      dialogTitle: 'Share this!'
+    });
+  }
+
+  async selectCrypto(random: boolean) {
     if(random){
       const randomIndex = Math.floor(Math.random() * cryptoData.length);
       this.cryptoId = cryptoData[randomIndex];
     }
     
     if(this.cryptoId == ''){
+      const toast = await this.toastController.create({
+        message: 'Please enter a cryptocurrency ID!',
+        duration: 2000,
+        position: 'bottom',
+        color: 'danger'
+      });
+  
+      await toast.present();
       return;
+    }
+
+    if(!cryptoData.includes(this.cryptoId)){
+      this.cryptoId = ''
+      const toast = await this.toastController.create({
+        message: 'Cryptocurrency not found! Please try a different one.',
+        duration: 2000,
+        position: 'bottom',
+        color: 'danger'
+      });
+  
+      await toast.present();
+      return
     }
 
     // API REQUEST
@@ -177,6 +209,7 @@ export class Tab1Page {
       if(this.score > this.bestScore){
         this.appStorage.set(HIGH_SCORE, this.score);
         this.bestScore = this.score;
+        this.newBestScore = true;
       }
     }
   }
@@ -194,6 +227,7 @@ export class Tab1Page {
       if(this.score > this.bestScore){
         this.appStorage.set(HIGH_SCORE, this.score);
         this.bestScore = this.score;
+        this.newBestScore = true;
       }
     }
   }
