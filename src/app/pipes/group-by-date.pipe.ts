@@ -18,7 +18,6 @@ export class GroupByDatePipe implements PipeTransform {
       groupedElements[dateValue].push(obj);
     });
     for (let prop in groupedElements) {
-      // console.log(prop);
       if (groupedElements.hasOwnProperty(prop)) {
         items.push({
           key: prop,
@@ -26,7 +25,6 @@ export class GroupByDatePipe implements PipeTransform {
         });
       }
     }
-    // console.log(items)
     return items;
   }
 

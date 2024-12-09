@@ -7,6 +7,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { GroupByDatePipe } from '../pipes/group-by-date.pipe';
+import { GroupByScorePipe } from '../pipes/group-by-score.pipe';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { GroupByDatePipe } from '../pipes/group-by-date.pipe';
     FormsModule,
     ExploreContainerComponentModule,
     Tab2PageRoutingModule,
-    GroupByDatePipe
+    GroupByDatePipe,
+    GroupByScorePipe,
   ],
   declarations: [Tab2Page]
 })
