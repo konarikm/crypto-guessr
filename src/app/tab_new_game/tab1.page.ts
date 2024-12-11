@@ -25,6 +25,7 @@ export class Tab1Page {
   
   cryptoId: string = '';
   filteredCryptos: string[] = []
+  usedCryptos: string[] = []; // Track used cryptocurrencies
 
   // API RESPONSE
   cryptoResponse?: CryptoResponse;
@@ -43,9 +44,12 @@ export class Tab1Page {
 
   filterSuggestions(event: any) {
     const query = event.target.value.toLowerCase();
+  
     if (query.length > 0) {
-      this.filteredCryptos = cryptoData.filter((crypto) =>
-        crypto.toLowerCase().startsWith(query)
+      this.filteredCryptos = cryptoData.filter(
+        (crypto) =>
+          crypto.toLowerCase().startsWith(query) &&
+          !this.usedCryptos.includes(crypto) // Exclude already used cryptos
       );
     } else {
       this.filteredCryptos = [];
@@ -89,8 +93,13 @@ export class Tab1Page {
 
   async saveGame() {
     const game = new Game(this.score);
-    this.gamesArray.unshift(game);
-    this.appStorage.set(GAME_HISTORY, this.gamesArray)
+
+    // Load existing games from storage to avoid overwriting
+    const savedGames = (await this.appStorage.get(GAME_HISTORY)) || [];
+    this.gamesArray = savedGames;
+
+    this.gamesArray.unshift(game); // Add the new game
+    this.appStorage.set(GAME_HISTORY, this.gamesArray); // Save the updated array
 
     this.gameOver = false;
     this.startGame = false;
@@ -136,6 +145,19 @@ export class Tab1Page {
       this.cryptoId = ''
       const toast = await this.toastController.create({
         message: 'Cryptocurrency not found! Please try a different one.',
+        duration: 2000,
+        position: 'bottom',
+        color: 'danger'
+      });
+  
+      await toast.present();
+      return
+    }
+
+    if (this.usedCryptos.includes(this.cryptoId)) {
+      this.cryptoId = ''
+      const toast = await this.toastController.create({
+        message: 'You can´t guess the same crypto multiple times!',
         duration: 2000,
         position: 'bottom',
         color: 'danger'
@@ -191,6 +213,11 @@ export class Tab1Page {
       },
     });
 
+    // Add crypto to used, so user can´t use it again in the same game
+    if (!this.usedCryptos.includes(this.cryptoId)) {
+      this.usedCryptos.push(this.cryptoId);
+    }
+
     this.selectGame = false;
     this.showButtons = true;
     this.showCrypto = true;
@@ -204,6 +231,9 @@ export class Tab1Page {
     else{
       // GAME OVER
       this.gameOver = true;
+      
+      // Reset used cryptos
+      this.usedCryptos = [];
 
       //CHECK IF SCORE IS NEW BEST
       if(this.score > this.bestScore){
@@ -223,6 +253,9 @@ export class Tab1Page {
       // GAME OVER
       this.gameOver = true;
 
+      // Reset used cryptos
+      this.usedCryptos = [];
+
       // CHECK IF SCORE IS NEW BEST
       if(this.score > this.bestScore){
         this.appStorage.set(HIGH_SCORE, this.score);
@@ -232,16 +265,19 @@ export class Tab1Page {
     }
   }
 
-  async ionViewDidEnter () {
-    const highScore = await this.appStorage.get(HIGH_SCORE)
-    const difficulty = await this.appStorage.get(DIFFICULTY)
-
-    if(difficulty){
-      this.difficulty = difficulty;
-    }
-
-    if (highScore) {
-      this.bestScore = highScore;
+  async ionViewDidEnter() {
+    try {
+      const [highScore, difficulty, savedGames] = await Promise.all([
+        this.appStorage.get(HIGH_SCORE),
+        this.appStorage.get(DIFFICULTY),
+        this.appStorage.get(GAME_HISTORY),
+      ]);
+  
+        this.bestScore = highScore || 0;
+        this.difficulty = difficulty || 'medium';
+        this.gamesArray = savedGames || [];
+    } catch (error) {
+        console.error('Error loading data from storage:', error);
     }
   }
 }

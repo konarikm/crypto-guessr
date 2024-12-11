@@ -18,15 +18,13 @@ export class Tab2Page {
   constructor(private appStorage: AppStorageService) {}
 
   async ionViewDidEnter () {
-    const data = await this.appStorage.get(GAME_HISTORY)
-    if (data) {
-      this.gamesArray = data
-    }
+    const storedGames = await this.appStorage.get(GAME_HISTORY);
+    this.gamesArray = storedGames || [];
 
-    const data2 = await this.appStorage.get(SORT_BY_SCORE)
-    this.sortByScore = data2
+    const sortByScoreSetting = await this.appStorage.get(SORT_BY_SCORE);
+    this.sortByScore = sortByScoreSetting || false;
 
-    this.arrayEmpty = (this.gamesArray.length == 0 ? true : false)
+    this.arrayEmpty = this.gamesArray.length === 0;
   }
 
   deleteGame(game: Game){
@@ -36,9 +34,7 @@ export class Tab2Page {
       this.gamesArray.splice(index, 1)
       this.appStorage.set(GAME_HISTORY, this.gamesArray)
 
-      if(this.gamesArray.length == 0){
-        this.arrayEmpty = true;
-      }
+      this.arrayEmpty = this.gamesArray.length === 0;
     }
   }
 

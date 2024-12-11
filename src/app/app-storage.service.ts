@@ -18,7 +18,7 @@ export class AppStorageService {
   }
 
   async get(key: string){
-    return this._storage?.get(key);
+    return await this._storage?.get(key);
   }
 
   public set(key: string, value: any){
