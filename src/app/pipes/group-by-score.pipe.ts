@@ -1,12 +1,11 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: 'groupByScore',
+  name: "groupByScore",
   standalone: true,
   pure: false,
 })
 export class GroupByScorePipe implements PipeTransform {
-
   transform(value: any) {
     const items: any[] = [];
     const groupedElements: any = {};
@@ -19,7 +18,9 @@ export class GroupByScorePipe implements PipeTransform {
       groupedElements[scoreValue].push(obj);
     });
 
-    const sortedKeys = Object.keys(groupedElements).sort((a, b) => Number(b) - Number(a));
+    const sortedKeys = Object.keys(groupedElements).sort(
+      (a, b) => Number(b) - Number(a),
+    );
 
     sortedKeys.forEach((key) => {
       items.push({
@@ -30,5 +31,4 @@ export class GroupByScorePipe implements PipeTransform {
 
     return items;
   }
-
 }

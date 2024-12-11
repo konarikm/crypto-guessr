@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>
-      Settings
-    </ion-title>
+    <ion-title> Settings </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,12 +11,16 @@
     </ion-toolbar>
   </ion-header>
 
-
   <ion-grid>
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-select justify="space-between" [(ngModel)]="selectedDifficulty" label="Game Difficulty" interface="popover">
+          <ion-select
+            justify="space-between"
+            [(ngModel)]="selectedDifficulty"
+            label="Game Difficulty"
+            interface="popover"
+          >
             <ion-select-option value="medium">Medium</ion-select-option>
             <ion-select-option value="hard">Hard</ion-select-option>
             <ion-select-option value="insane">Insane</ion-select-option>
@@ -26,17 +28,15 @@
         </ion-item>
 
         <ion-item>
-          <ion-toggle justify="space-between" [(ngModel)]="sortByScore">Sort by Score</ion-toggle>
+          <ion-toggle justify="space-between" [(ngModel)]="sortByScore"
+            >Sort by Score</ion-toggle
+          >
         </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col>
-        
-      </ion-col>
+      <ion-col> </ion-col>
     </ion-row>
   </ion-grid>
-  
-
 </ion-content>

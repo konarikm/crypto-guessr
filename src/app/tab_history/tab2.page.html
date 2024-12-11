@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>
-      History
-    </ion-title>
+    <ion-title> History </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -21,7 +19,7 @@
         </ion-label>
       </ion-item>
     </div>
-    
+
     <!--SORT BY SCORE-->
     <div *ngIf="!arrayEmpty && sortByScore">
       <ion-item-group *ngFor="let group of gamesArray | groupByScore">
@@ -47,7 +45,9 @@
     <!--SORT BY DATE-->
     <div *ngIf="!arrayEmpty && !sortByScore">
       <ion-item-group *ngFor="let group of gamesArray | groupByDate">
-        <ion-item-divider> {{ group.key | date: 'dd.MM.YYYY' }} </ion-item-divider>
+        <ion-item-divider>
+          {{ group.key | date: 'dd.MM.YYYY' }}
+        </ion-item-divider>
         <ion-item-sliding *ngFor="let item of group.list">
           <ion-item>
             <ion-label>

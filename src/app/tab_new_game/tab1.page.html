@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>
-      CryptoGuessr
-    </ion-title>
+    <ion-title> CryptoGuessr </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,82 +15,118 @@
   <div *ngIf="startGame == false">
     <ion-card color="primary">
       <ion-card-header>
-        <ion-card-title class="ion-text-center" style="font-size: large;">
+        <ion-card-title class="ion-text-center" style="font-size: large">
           Are you a true Cryptomaniac? 🪙
         </ion-card-title>
       </ion-card-header>
       <ion-card-content class="ion-text-center">
-        <p style="font-size: medium;">Think you know the world of cryptocurrencies?</p>
-        <br>
-        <p style="font-size: medium;">Let’s put your skills to the test!</p>
-        <br>
-        <p style="font-size: medium;">Guess whether the current real price a of cryptocurrency is <strong>higher</strong> or <strong>lower</strong> and see if you are the ultimate crypto expert! 🚀</p>
+        <p style="font-size: medium">
+          Think you know the world of cryptocurrencies?
+        </p>
+        <br />
+        <p style="font-size: medium">Let’s put your skills to the test!</p>
+        <br />
+        <p style="font-size: medium">
+          Guess whether the current real price a of cryptocurrency is
+          <strong>higher</strong> or <strong>lower</strong> and see if you are
+          the ultimate crypto expert! 🚀
+        </p>
       </ion-card-content>
     </ion-card>
 
     <ion-card color="light">
       <ion-card-header>
-        <ion-card-title class="ion-text-center" style="font-size: large;">
+        <ion-card-title class="ion-text-center" style="font-size: large">
           <b>High Score: {{ bestScore }}</b>
         </ion-card-title>
       </ion-card-header>
     </ion-card>
 
-    <ion-button class="ion-padding" (click)="startNewGame()" expand="block" style="font-size: medium;" shape="round" color="tertiary">
+    <ion-button
+      class="ion-padding"
+      (click)="startNewGame()"
+      expand="block"
+      style="font-size: medium"
+      shape="round"
+      color="tertiary"
+    >
       CLICK TO START A NEW GAME
     </ion-button>
   </div>
-  
+
   <!-- GAME SCREEN -->
   <div *ngIf="startGame">
-  <!-- INPUT CRYPTO / RANDOM GAME-->
+    <!-- INPUT CRYPTO / RANDOM GAME-->
     <div *ngIf="selectGame">
       <ion-card color="light" class="ion-padding">
         <ion-card-header>
-          <ion-card-title class="ion-text-center" style="font-size: large;">
+          <ion-card-title class="ion-text-center" style="font-size: large">
             Are you ready for the game?
           </ion-card-title>
         </ion-card-header>
         <ion-card-content class="ion-text-center">
-          <p style="font-size: medium;">Input cryptocurrency name or generate random one</p>
+          <p style="font-size: medium">
+            Input cryptocurrency name or generate random one
+          </p>
         </ion-card-content>
       </ion-card>
 
-      <ion-input  
+      <ion-input
         fill="solid"
         placeholder="Cryptocurrency ID"
         [(ngModel)]="cryptoId"
         (ionInput)="filterSuggestions($event)"
-        #inputField>
+        #inputField
+      >
       </ion-input>
 
-      <ion-list *ngIf="filteredCryptos.length > 0" style="position: absolute; z-index: 10; background: white; width: 100%;">
-        <ion-item 
-            *ngFor="let crypto of filteredCryptos" 
-            (click)="selectInputCrypto(crypto, inputField)">
+      <ion-list
+        *ngIf="filteredCryptos.length > 0"
+        style="position: absolute; z-index: 10; background: white; width: 100%"
+      >
+        <ion-item
+          *ngFor="let crypto of filteredCryptos"
+          (click)="selectInputCrypto(crypto, inputField)"
+        >
           {{ crypto }}
         </ion-item>
       </ion-list>
 
       <ion-row class="ion-align-items-center">
         <ion-col size="6">
-          <ion-button expand="full" (click)="selectCrypto(false)" color="dark" style="height: 80px;">Submit</ion-button>
+          <ion-button
+            expand="full"
+            (click)="selectCrypto(false)"
+            color="dark"
+            style="height: 80px"
+            >Submit</ion-button
+          >
         </ion-col>
         <ion-col size="6">
-          <ion-button expand="full" (click)="selectCrypto(true)" color="dark" style="height: 80px;">Random Cryptocurrency</ion-button>
+          <ion-button
+            expand="full"
+            (click)="selectCrypto(true)"
+            color="dark"
+            style="height: 80px"
+            >Random Cryptocurrency</ion-button
+          >
         </ion-col>
       </ion-row>
 
       <ion-card color="light">
-        <ion-card-header style="align-items: center;">
-          <ion-card-title><b style="font-size: x-large;">CURRENT SCORE: {{ score }}</b></ion-card-title>
+        <ion-card-header style="align-items: center">
+          <ion-card-title
+            ><b style="font-size: x-large"
+              >CURRENT SCORE: {{ score }}</b
+            ></ion-card-title
+          >
         </ion-card-header>
       </ion-card>
     </div>
 
     <div *ngIf="showCrypto">
       <ion-card color="warning">
-        <ion-card-header style="align-items: center;">
+        <ion-card-header style="align-items: center">
           <ion-card-title>
             <b>Price: ${{ displayedPrice }}</b>
           </ion-card-title>
@@ -104,21 +138,41 @@
     <div *ngIf="showButtons && !gameOver && !correctAnswer">
       <ion-grid>
         <ion-row>
-          <ion-col size="6"><ion-button (click)="isMore()" color="success" expand="block" style="height: 200px;"><b style="font-size: x-large;">MORE EXPENSIVE</b></ion-button></ion-col>
-          <ion-col size="6"><ion-button (click)="isLess()" color="danger" expand="block" style="height: 200px;"><b style="font-size: x-large;">LESS EXPENSIVE</b></ion-button></ion-col>
+          <ion-col size="6"
+            ><ion-button
+              (click)="isMore()"
+              color="success"
+              expand="block"
+              style="height: 200px"
+              ><b style="font-size: x-large">MORE EXPENSIVE</b></ion-button
+            ></ion-col
+          >
+          <ion-col size="6"
+            ><ion-button
+              (click)="isLess()"
+              color="danger"
+              expand="block"
+              style="height: 200px"
+              ><b style="font-size: x-large">LESS EXPENSIVE</b></ion-button
+            ></ion-col
+          >
         </ion-row>
       </ion-grid>
-  
+
       <ion-grid>
         <ion-row>
           <ion-col>
             <div *ngIf="gameOver == false">
               <ion-card color="light">
-                <ion-card-header style="align-items: center;">
-                  <ion-card-title><b style="font-size: x-large;">CURRENT SCORE: {{ score }}</b></ion-card-title>
+                <ion-card-header style="align-items: center">
+                  <ion-card-title
+                    ><b style="font-size: x-large"
+                      >CURRENT SCORE: {{ score }}</b
+                    ></ion-card-title
+                  >
                 </ion-card-header>
-              </ion-card> 
-          </div>
+              </ion-card>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -126,25 +180,35 @@
   </div>
 
   <!-- CORRECT ANSWER -> SHOW DETAILED INFORMATION -->
-  <div *ngIf="correctAnswer" style="align-items: center;">
+  <div *ngIf="correctAnswer" style="align-items: center">
     <ion-card color="success">
-      <ion-card-header style="align-items: center;">
+      <ion-card-header style="align-items: center">
         <ion-card-title>
           <b>CORRECT!</b>
         </ion-card-title>
-        <ion-card-subtitle><b>{{ cryptoSymbol }} is currently worth: ${{ realPrice }}</b></ion-card-subtitle>
+        <ion-card-subtitle
+          ><b
+            >{{ cryptoSymbol }} is currently worth: ${{ realPrice }}</b
+          ></ion-card-subtitle
+        >
       </ion-card-header>
     </ion-card>
 
     <ion-card color="light">
-      <ion-card-header style="align-items: center;">
-        <ion-card-title><b style="font-size: x-large;">CURRENT SCORE: {{ score }}</b></ion-card-title>
+      <ion-card-header style="align-items: center">
+        <ion-card-title
+          ><b style="font-size: x-large"
+            >CURRENT SCORE: {{ score }}</b
+          ></ion-card-title
+        >
       </ion-card-header>
-    </ion-card> 
+    </ion-card>
 
     <ion-row>
       <ion-col size="6" offset="3">
-        <ion-button (click)="nextCrypto()" color="tertiary" expand="block">Next round</ion-button>
+        <ion-button (click)="nextCrypto()" color="tertiary" expand="block"
+          >Next round</ion-button
+        >
       </ion-col>
     </ion-row>
   </div>
@@ -154,42 +218,90 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-
           <!-- NEW HIGH SCORE -->
           <div *ngIf="newBestScore">
             <ion-card color="danger">
-              <ion-card-header style="align-items: center;">
-                <ion-card-title><b style="font-size: xx-large;">GAME OVER!</b></ion-card-title>
-                <ion-card-subtitle><b style="font-size: small;">{{cryptoSymbol}} is currently worth: ${{realPrice}}</b></ion-card-subtitle>
+              <ion-card-header style="align-items: center">
+                <ion-card-title
+                  ><b style="font-size: xx-large">GAME OVER!</b></ion-card-title
+                >
+                <ion-card-subtitle
+                  ><b style="font-size: small"
+                    >{{cryptoSymbol}} is currently worth: ${{realPrice}}</b
+                  ></ion-card-subtitle
+                >
               </ion-card-header>
-            </ion-card> 
+            </ion-card>
             <ion-card color="success">
-              <ion-card-header style="align-items: center;">
-                <ion-card-title><b style="font-size: x-large;">NEW HIGH SCORE!</b></ion-card-title>
-                <ion-card-subtitle><b style="font-size: x-large;">Score: {{ score }} </b></ion-card-subtitle>
+              <ion-card-header style="align-items: center">
+                <ion-card-title
+                  ><b style="font-size: x-large"
+                    >NEW HIGH SCORE!</b
+                  ></ion-card-title
+                >
+                <ion-card-subtitle
+                  ><b style="font-size: x-large"
+                    >Score: {{ score }}
+                  </b></ion-card-subtitle
+                >
               </ion-card-header>
             </ion-card>
           </div>
 
           <div *ngIf="!newBestScore">
             <ion-card color="danger">
-              <ion-card-header style="align-items: center;">
-                <ion-card-title><b style="font-size: xx-large;">GAME OVER!</b></ion-card-title>
-                <ion-card-subtitle><b style="font-size: x-large;">Final Score: {{ score }}</b></ion-card-subtitle>
+              <ion-card-header style="align-items: center">
+                <ion-card-title
+                  ><b style="font-size: xx-large">GAME OVER!</b></ion-card-title
+                >
+                <ion-card-subtitle
+                  ><b style="font-size: x-large"
+                    >Final Score: {{ score }}</b
+                  ></ion-card-subtitle
+                >
               </ion-card-header>
-              <ion-card-content style="text-align: center;">
-                <b style="font-size: medium;">{{cryptoSymbol}} is currently worth: ${{realPrice}}</b>
+              <ion-card-content style="text-align: center">
+                <b style="font-size: medium"
+                  >{{cryptoSymbol}} is currently worth: ${{realPrice}}</b
+                >
               </ion-card-content>
-            </ion-card> 
+            </ion-card>
           </div>
         </ion-col>
       </ion-row>
 
-      <ion-button (click)="saveGame()" class="ion-padding" expand="block" color="success" style="height: 100px;"><b>SAVE THIS GAME</b></ion-button>
-      <ion-button (click)="shareGame()" class="ion-padding" expand="block" color="tertiary" style="height: 100px;"><b>SHARE THIS GAME</b></ion-button>
-      <ion-button (click)="startNewGame()" class="ion-padding" expand="block" color="light" style="height: 100px;"><b>START NEW GAME</b></ion-button>
-      <ion-button (click)="backToMenu()" class="ion-padding" expand="block" color="dark" style="height: 100px;"><b>BACK TO MENU</b></ion-button>
+      <ion-button
+        (click)="startNewGame()"
+        class="ion-padding"
+        expand="block"
+        color="light"
+        style="height: 100px"
+        ><b>START NEW GAME</b></ion-button
+      >
+      <ion-button
+        (click)="saveGame()"
+        class="ion-padding"
+        expand="block"
+        color="success"
+        style="height: 100px"
+        ><b>SAVE THIS GAME</b></ion-button
+      >
+      <ion-button
+        (click)="shareGame()"
+        class="ion-padding"
+        expand="block"
+        color="tertiary"
+        style="height: 100px"
+        ><b>SHARE THIS GAME</b></ion-button
+      >
+      <ion-button
+        (click)="backToMenu()"
+        class="ion-padding"
+        expand="block"
+        color="dark"
+        style="height: 100px"
+        ><b>BACK TO MENU</b></ion-button
+      >
     </ion-grid>
   </div>
-
 </ion-content>

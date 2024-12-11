@@ -1,12 +1,11 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: 'groupByDate',
+  name: "groupByDate",
   standalone: true,
   pure: false,
 })
 export class GroupByDatePipe implements PipeTransform {
-
   transform(value: any) {
     const items: any[] = [];
     const groupedElements: any = {};
@@ -27,5 +26,4 @@ export class GroupByDatePipe implements PipeTransform {
     }
     return items;
   }
-
 }
