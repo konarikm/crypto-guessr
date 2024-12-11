@@ -1,6 +1,12 @@
 {
-  "typescript.preferences.autoImportFileExcludePatterns": ["@ionic/angular/common", "@ionic/angular/standalone"],
-  "editor.formatOnSave" : true,
-  "prettier.eslintIntegration": true,
-  "prettier.enable": true
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "@ionic/angular/common",
+    "@ionic/angular/standalone"
+  ],
+  "editor.defaultFormatter": "exceptionptr.vscode-prettier-eslint",
+  "editor.formatOnType": false, // required
+  "editor.formatOnPaste": true, // optional
+  "editor.formatOnSave": true, // optional
+  "editor.formatOnSaveMode": "file", // required to format on save
+  "files.autoSave": "onFocusChange" // optional but recommended
 }
